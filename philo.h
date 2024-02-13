@@ -6,7 +6,7 @@
 /*   By: tpenalba <tpenalba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:10:10 by npatron           #+#    #+#             */
-/*   Updated: 2024/02/12 20:01:53 by tpenalba         ###   ########.fr       */
+/*   Updated: 2024/02/13 18:35:25 by tpenalba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	int				id;
 	int				eat;
-	bool			dead;
+	int				eat_counting;
 	long long unsigned int			last_meal;
 	
 	pthread_mutex_t	*r_fork;
@@ -38,15 +38,18 @@ typedef struct s_philo
 typedef struct s_data
 {
     int 			nbr_philo;
-    int 			nbr_meals;
     long long unsigned int 	tt_die;
     int 			tt_eat;
     int 			tt_sleep;
+	int 			nbr_meals;
+	
     long long 		start_simulation;
-
+	bool			dead;
 	pthread_t		steve_jobs;
 	pthread_mutex_t *forks;
+	pthread_mutex_t stop;
 	pthread_mutex_t print;
+	pthread_mutex_t eaten;
 	pthread_mutex_t	deadlock;
 	t_philo 		*philo;
 }			t_data;
@@ -59,8 +62,10 @@ long long	get_current_time(void);
 int			ft_usleep(long long milliseconds);
 void 		*routine(void *ptr);
 void 		start(t_data *data);
-void		message(t_data *data, char *msg);
+void		message(t_philo *philo, char *msg);
 void		thinking(t_philo *philo);
 void		*meeting_security(void *ptr);
-
+int 		dead_loop(t_philo *philo);
+void		last_fiesta(t_data *data);
+int			c_fini(t_philo *philo);
 #endif

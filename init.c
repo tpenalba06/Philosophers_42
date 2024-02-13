@@ -6,7 +6,7 @@
 /*   By: tpenalba <tpenalba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 12:10:04 by npatron           #+#    #+#             */
-/*   Updated: 2024/02/12 19:40:14 by tpenalba         ###   ########.fr       */
+/*   Updated: 2024/02/13 18:42:26 by tpenalba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	init_mutexes(t_data *data)
 		data->philo[i].r_fork = &data->forks[i];
 		i++;
 	}
-	//pthread_mutex_init(&data->deadlock, NULL);
+	pthread_mutex_init(&data->deadlock, NULL);
+	pthread_mutex_init(&data->stop, NULL);
+	pthread_mutex_init(&data->print, NULL);
+	pthread_mutex_init(&data->eaten, NULL);
 	return ;
 }
 
@@ -39,12 +42,13 @@ void    init_struct(t_data *data)
 	int	i;
 	
 	i = 0;
+	data->dead = 0;
 	while (i < data->nbr_philo)
 	{
 		data->philo[i].id = i;
 		data->philo[i].eat = 0;
-		data->philo[i].dead = false;
 		data->philo[i].data = data;
+		data->philo[i].eat_counting = 0;
 		data->philo[i].last_meal = get_current_time();
 		i++;
 	}
@@ -62,13 +66,16 @@ void start(t_data *data)
 	while (i < data->nbr_philo)
 	{
 		pthread_create(&data->philo[i].thread, NULL, routine, &data->philo[i]);
+		usleep(1000);
 		i++;
 	}
 		i = -1;
 	while (++i < data->nbr_philo)
 	{
+		usleep(100);
 		if (pthread_join(data->philo[i].thread, NULL))
 			EXIT_FAILURE;
 	}
+	pthread_join(data->steve_jobs, NULL);
 	return ;
 }

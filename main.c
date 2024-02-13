@@ -6,7 +6,7 @@
 /*   By: tpenalba <tpenalba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:10:07 by npatron           #+#    #+#             */
-/*   Updated: 2024/02/12 17:49:10 by tpenalba         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:35:34 by tpenalba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 {
     t_data	*data;
     t_philo *philo;
-	//int i = 0;
+
 	data = malloc(sizeof(t_data));
     if(data == NULL)
         perror("erreur d'allocation");
@@ -27,8 +27,11 @@ int main(int argc, char **argv)
         start(data);
     }
     (void)philo;
-    //if( ++i < data->nbr_philo) 
-      //  pthread_join(data->philo[i].thread, NULL);
-   // sleep(10);
+    //last_fiesta(philo->data);
+    free(data->philo);
+	free(data->forks);
+    free(philo);
+    free(data);
+
     return (0);
 }

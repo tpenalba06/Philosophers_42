@@ -6,7 +6,7 @@
 #    By: tpenalba <tpenalba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 15:08:16 by npatron           #+#    #+#              #
-#    Updated: 2024/02/12 19:20:54 by tpenalba         ###   ########.fr        #
+#    Updated: 2024/02/13 20:21:36 by tpenalba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC = main.c \
 
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=thread
 
 .c.o:
 	gcc $(CFLAGS) -c $< -o ${<:.c=.o}
